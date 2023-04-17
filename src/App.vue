@@ -13,23 +13,25 @@ var data_productpage = {"pageName": "Product Page", "color": "rgb(52, 235, 88)",
 var data_wizard = {"pageName": "Wizard",  "color": "rgb(52, 235, 88)", "data": []}
 var data_login = {"pageName": "Login", "color": "rgb(52, 235, 88)", "labels": [], "data": []}
 var data_basket =  {"pageName": "Basket", "color": "rgb(52, 235, 88)", "labels": [], "data": []}
-var no_records = 100
+var no_records = 300
 
+var parsedData = {"frontPage":{"time":[],"data":[]},"productPage":{"time":[],"data":[]},"wizard":{"time":[],"data":[]},"login":{"time":[],"data":[]},"basket":{"time":[],"data":[]}}
 var performanceData = null
-axios.get('https://pokeapi.co/api/v2/pokemon/')
+axios.get('http://localhost:5000/api/v1/get-days?days=1')
   .then(response => {
     performanceData = response.data
-    console.log(performanceData)
-    data_frontpage["data"] = generateData()
-    data_frontpage["labels"] = generateLabels()
-    data_productpage["data"] = generateData()
-    data_productpage["labels"] = generateLabels()
-    data_wizard["data"] = generateData()
-    data_wizard["labels"] = generateLabels()
-    data_login["data"] = generateData()
-    data_login["labels"] = generateLabels()
-    data_basket["data"] = generateData()
-    data_basket["labels"] = generateLabels()
+    //console.log(performanceData)
+    parsedData = parseData(performanceData)
+    data_frontpage["labels"] = parsedData["frontPage"]["time"]
+    data_frontpage["data"] = parsedData["frontPage"]["data"]
+    data_productpage["labels"] = parsedData["productPage"]["time"]
+    data_productpage["data"] = parsedData["productPage"]["data"]
+    data_wizard["labels"] = parsedData["wizard"]["time"]
+    data_wizard["data"] = parsedData["wizard"]["data"]
+    data_login["labels"] = parsedData["login"]["time"]
+    data_login["data"] = parsedData["login"]["data"]
+    data_basket["labels"] = parsedData["basket"]["time"]
+    data_basket["data"] = parsedData["basket"]["data"]
     loaded.value = true
   })
   .catch(error => {
@@ -54,6 +56,24 @@ function generateLabels() {
   return labels;
 }
 
+function parseData(apiData) {
+  console.log(parsedData)
+  for(var i = 0; i < apiData['result'].length; i++) {
+    parsedData["frontPage"]["time"].push(apiData['result'][i]["datetime"])
+    parsedData["frontPage"]["data"].push(apiData['result'][i]["front_page"])
+    parsedData["productPage"]["data"].push(apiData['result'][i]["product_page"])
+    parsedData["wizard"]["data"].push(apiData['result'][i]["wizard"])
+    parsedData["login"]["data"].push(apiData['result'][i]["login"])
+    parsedData["basket"]["data"].push(apiData['result'][i]["basket"])
+  }
+  parsedData["productPage"]["time"] = parsedData["frontPage"]["time"]
+  parsedData["wizard"]["time"] = parsedData["frontPage"]["time"]
+  parsedData["login"]["time"] = parsedData["frontPage"]["time"]
+  parsedData["basket"]["time"] = parsedData["frontPage"]["time"]
+  
+  console.log(parsedData)
+  return parsedData
+}
 </script>
 
 <template>
