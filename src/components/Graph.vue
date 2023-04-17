@@ -23,7 +23,7 @@
     data() {
       return {
         chartData: {
-          labels: [ '1 april 00:00', '1 april 00:05', '1 april 00:10', '1 april 00:15', '1 april 00:20', '1 april 00:25', '1 april 00:30', '1 april 00:35', '1 april 00:40', '1 april 00:45', '1 april 00:50', '1 april 00:55', '1 april 01:00', '1 april 01:05','1 april 00:00', '1 april 00:05', '1 april 00:10', '1 april 00:15', '1 april 00:20', '1 april 00:25', '1 april 00:30', '1 april 00:35', '1 april 00:40', '1 april 00:45', '1 april 00:50', '1 april 00:55', '1 april 01:00', '1 april 01:05'],
+          labels: this.PageData['labels'],
           datasets: [ { 
             backgroundColor: this.PageData['color'],
             borderColor: this.PageData['color'],

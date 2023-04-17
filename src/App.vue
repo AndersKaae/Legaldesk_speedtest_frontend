@@ -10,9 +10,10 @@ const loaded = ref(false);
 
 var data_frontpage = {"pageName": "Front Page", "color": "rgb(52, 235, 88)", "data": []}
 var data_productpage = {"pageName": "Product Page", "color": "rgb(52, 235, 88)", "data": []}
-var data_wizard = {"pageName": "Front Page",  "color": "rgb(52, 235, 88)", "data": []}
+var data_wizard = {"pageName": "Wizard",  "color": "rgb(52, 235, 88)", "data": []}
 var data_login = {"pageName": "Login", "color": "rgb(52, 235, 88)", "labels": [], "data": []}
 var data_basket =  {"pageName": "Basket", "color": "rgb(52, 235, 88)", "labels": [], "data": []}
+var no_records = 100
 
 var performanceData = null
 axios.get('https://pokeapi.co/api/v2/pokemon/')
@@ -37,7 +38,7 @@ axios.get('https://pokeapi.co/api/v2/pokemon/')
 
   function generateData() {
   var data = []
-  for (var i = 0; i < 300; i++) {
+  for (var i = 0; i < no_records; i++) {
     data.push(Math.floor(Math.random() * 25))
   }
   return data
@@ -46,9 +47,9 @@ axios.get('https://pokeapi.co/api/v2/pokemon/')
 function generateLabels() {
   var labels = [];
   var startDate = new Date('April 1, 2023 00:00:00');
-  for (var i = 0; i < 300; i++) {
+  for (var i = 0; i < no_records; i++) {
     var date = new Date(startDate.getTime() + (i * 5 * 60 * 1000));
-    labels.push(date);
+    labels.push(date.toLocaleString());
   }
   return labels;
 }
