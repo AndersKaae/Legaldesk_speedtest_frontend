@@ -16,7 +16,7 @@
   
   export default {
     props: {
-        PageType: String
+        PageData: JSON
     },
     name: 'LineChart',
     components: { Line },
@@ -25,10 +25,10 @@
         chartData: {
           labels: [ '1 april 00:00', '1 april 00:05', '1 april 00:10', '1 april 00:15', '1 april 00:20', '1 april 00:25', '1 april 00:30', '1 april 00:35', '1 april 00:40', '1 april 00:45', '1 april 00:50', '1 april 00:55', '1 april 01:00', '1 april 01:05','1 april 00:00', '1 april 00:05', '1 april 00:10', '1 april 00:15', '1 april 00:20', '1 april 00:25', '1 april 00:30', '1 april 00:35', '1 april 00:40', '1 april 00:45', '1 april 00:50', '1 april 00:55', '1 april 01:00', '1 april 01:05'],
           datasets: [ { 
-            backgroundColor: 'rgb(52, 235, 88)',
-            borderColor: 'rgb(52, 235, 88)',
-            label: this.PageType,
-            data: [6.23, 11.50, 6.44, 3.55, 5.89, 6.55, 8.21, 9.11, 10.44, 22.59, 11.00, 5.49, 2.23, 6.42, 6.23, 11.50, 6.44, 3.55, 5.89, 6.55, 8.21, 9.11, 10.44, 22.59, 11.00, 5.49, 2.23, 6.42] } ]
+            backgroundColor: this.PageData['color'],
+            borderColor: this.PageData['color'],
+            label: this.PageData['pageName'],
+            data: this.PageData['data'] } ]
         },
         chartOptions: {
           width : 100,
