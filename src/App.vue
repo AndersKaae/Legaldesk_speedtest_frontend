@@ -75,18 +75,25 @@ function parseData(apiData) {
 </script>
 
 <template>
+  <UpOrDown></UpOrDown>
   <div v-if="loaded">
-    <UpOrDown></UpOrDown>
     <Graph :PageData="data_frontpage"></Graph>
     <Graph :PageData="data_productpage"></Graph>
     <Graph :PageData="data_wizard"></Graph>
     <Graph :PageData="data_login"></Graph>
     <Graph :PageData="data_basket"></Graph>
   </div>
-  <div v-else>
-    <p>Loading...</p>
+  <div id="loader" v-else>
+    <img src="./assets/loader.gif" alt="Loading..."/>
   </div>
 </template>
 
 <style scoped>
+#loader{
+  padding-top: 5rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
 </style>

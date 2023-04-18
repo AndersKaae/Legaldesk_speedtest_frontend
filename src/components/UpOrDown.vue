@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div id="main-text">Legaldesk.dk is UP</div>
+  <div id="main-text">Legaldesk.dk status</div>
 </template>
 
 <style scoped>
