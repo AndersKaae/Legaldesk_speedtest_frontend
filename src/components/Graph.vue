@@ -34,6 +34,9 @@
           width : 100,
           responsive: true,
           maintainAspectRatio: false,
+          borderWidth: 1,
+          pointBorderWidth: 0,
+          pointRadius: 1,
           scales: {
             y: {
                 beginAtZero: true,

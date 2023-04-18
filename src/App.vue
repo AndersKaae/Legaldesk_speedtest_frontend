@@ -17,7 +17,8 @@ var no_records = 300
 
 var parsedData = {"frontPage":{"time":[],"data":[]},"productPage":{"time":[],"data":[]},"wizard":{"time":[],"data":[]},"login":{"time":[],"data":[]},"basket":{"time":[],"data":[]}}
 var performanceData = null
-axios.get('https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?days=1')
+//axios.get('https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?days=1')
+axios.get('http://localhost:5000/api/v1/get-days?days=1')
   .then(response => {
     performanceData = response.data
     //console.log(performanceData)
@@ -57,9 +58,8 @@ function generateLabels() {
 }
 
 function parseData(apiData) {
-  console.log(parsedData)
   for(var i = 0; i < apiData['result'].length; i++) {
-    parsedData["frontPage"]["time"].push(apiData['result'][i]["datetime"])
+    parsedData["frontPage"]["time"].push(apiData['result'][i]["datetime"].toLocaleString())
     parsedData["frontPage"]["data"].push(apiData['result'][i]["front_page"])
     parsedData["productPage"]["data"].push(apiData['result'][i]["product_page"])
     parsedData["wizard"]["data"].push(apiData['result'][i]["wizard"])
@@ -70,8 +70,6 @@ function parseData(apiData) {
   parsedData["wizard"]["time"] = parsedData["frontPage"]["time"]
   parsedData["login"]["time"] = parsedData["frontPage"]["time"]
   parsedData["basket"]["time"] = parsedData["frontPage"]["time"]
-
-  console.log(parsedData)
   return parsedData
 }
 </script>
