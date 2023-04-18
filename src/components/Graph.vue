@@ -44,7 +44,7 @@
           maintainAspectRatio: false,
           borderWidth: 2,
           pointBorderWidth: 0,
-          pointRadius: 0,
+          pointRadius: 1.5,
           scales: {
             y: {
                 beginAtZero: true,
