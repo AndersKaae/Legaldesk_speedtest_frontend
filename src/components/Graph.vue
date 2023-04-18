@@ -42,7 +42,7 @@
           width : 100,
           responsive: true,
           maintainAspectRatio: false,
-          borderWidth: 1,
+          borderWidth: 2,
           pointBorderWidth: 0,
           pointRadius: 0,
           scales: {
