@@ -2,11 +2,10 @@
 import { ref } from 'vue'
 import UpOrDown from './components/UpOrDown.vue'
 import Graph from './components/Graph.vue'
+import UptimePercentage from './components/UptimePercentage.vue'
 import axios from 'axios'
 
 const loaded = ref(false);
-
-
 
 var data_frontpage = {"pageName": "Front Page", "color": "rgb(52, 235, 88)", "data": []}
 var data_productpage = {"pageName": "Product Page", "color": "rgb(52, 235, 88)", "data": []}
@@ -17,6 +16,7 @@ var no_records = 300
 
 var parsedData = {"frontPage":{"time":[],"data":[]},"productPage":{"time":[],"data":[]},"wizard":{"time":[],"data":[]},"login":{"time":[],"data":[]},"basket":{"time":[],"data":[]}}
 var performanceData = null
+
 axios.get('https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?records=288')
 //axios.get('http://localhost:5000/api/v1/get-days?records=288')
   .then(response => {
@@ -37,7 +37,7 @@ axios.get('https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?
   })
   .catch(error => {
     console.error(error)
-  })
+})
 
 function parseData(apiData) {
   // We are subtracting one from the length of the array because the last element might be incomplete because the test is running
@@ -72,6 +72,13 @@ function formatTime(time) {
 
 <template>
   <UpOrDown></UpOrDown>
+  <div class="uptime-container">
+    <UptimePercentage></UptimePercentage>
+    <UptimePercentage></UptimePercentage>
+    <UptimePercentage></UptimePercentage>
+    <UptimePercentage></UptimePercentage>
+    <UptimePercentage></UptimePercentage>
+  </div>
   <div v-if="loaded">
     <Graph :PageData="data_frontpage"></Graph>
     <Graph :PageData="data_productpage"></Graph>
@@ -91,5 +98,14 @@ function formatTime(time) {
   margin-left: auto;
   margin-right: auto;
   width: 40%;
+}
+
+.uptime-container {
+  margin: 0 auto;
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
 }
 </style>
