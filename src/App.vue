@@ -39,27 +39,11 @@ axios.get('https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?
     console.error(error)
   })
 
-  function generateData() {
-  var data = []
-  for (var i = 0; i < no_records; i++) {
-    data.push(Math.floor(Math.random() * 25))
-  }
-  return data
-}
-
-function generateLabels() {
-  var labels = [];
-  var startDate = new Date('April 1, 2023 00:00:00');
-  for (var i = 0; i < no_records; i++) {
-    var date = new Date(startDate.getTime() + (i * 5 * 60 * 1000));
-    labels.push(date.toLocaleString());
-  }
-  return labels;
-}
-
 function parseData(apiData) {
-  for(var i = 0; i < apiData['result'].length; i++) {
-    parsedData["frontPage"]["time"].push(apiData['result'][i]["datetime"])
+  // We are subtracting one from the length of the array because the last element might be incomplete because the test is running
+  for(var i = 0; i < apiData['result'].length -1; i++) {
+    var formattedTime = formatTime(apiData['result'][i]["datetime"])
+    parsedData["frontPage"]["time"].push(formattedTime)
     parsedData["frontPage"]["data"].push(apiData['result'][i]["front_page"])
     parsedData["productPage"]["data"].push(apiData['result'][i]["product_page"])
     parsedData["wizard"]["data"].push(apiData['result'][i]["wizard"])
@@ -72,6 +56,18 @@ function parseData(apiData) {
   parsedData["basket"]["time"] = parsedData["frontPage"]["time"]
   return parsedData
 }
+
+// Write a function to format a date to only include hours and minutes
+function formatTime(time) {
+  var time = new Date(time)
+  var hours = time.getHours()
+  var minutes = time.getMinutes()
+  if (minutes < 10) {
+    minutes = "0" + minutes
+  }
+  return hours + ":" + minutes
+}
+
 </script>
 
 <template>
