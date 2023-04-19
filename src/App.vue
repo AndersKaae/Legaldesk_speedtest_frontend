@@ -17,8 +17,8 @@ var no_records = 300
 
 var parsedData = {"frontPage":{"time":[],"data":[]},"productPage":{"time":[],"data":[]},"wizard":{"time":[],"data":[]},"login":{"time":[],"data":[]},"basket":{"time":[],"data":[]}}
 var performanceData = null
-axios.get('https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?days=1')
-//axios.get('http://localhost:5000/api/v1/get-days?days=1')
+axios.get('https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?records=288')
+//axios.get('http://localhost:5000/api/v1/get-days?records=288')
   .then(response => {
     performanceData = response.data
     //console.log(performanceData)
