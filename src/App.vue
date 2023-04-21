@@ -12,7 +12,6 @@ var data_productpage = {"pageName": "Product Page", "color": "rgb(52, 235, 88)",
 var data_wizard = {"pageName": "Wizard",  "color": "rgb(52, 235, 88)", "data": [], "up": null}
 var data_login = {"pageName": "Login", "color": "rgb(52, 235, 88)", "labels": [], "data": [], "up": null}
 var data_basket =  {"pageName": "Basket", "color": "rgb(52, 235, 88)", "labels": [], "data": [], "up": null}
-var no_records = 300
 
 var parsedData = {"frontPage":{"time":[],"data":[]},"productPage":{"time":[],"data":[]},"wizard":{"time":[],"data":[]},"login":{"time":[],"data":[]},"basket":{"time":[],"data":[]}}
 var performanceData = null
@@ -118,11 +117,11 @@ function formatTime(time) {
 
 <style scoped>
 #loader{
+  widows: 100px;
   padding-top: 5rem;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
+  display: flex;
+  justify-content: center;
 }
 
 .uptime-container {
