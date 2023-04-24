@@ -7,14 +7,12 @@ import axios from 'axios'
 
 const loaded = ref(false);
 
-var slice_no = ref(0)
+var records = ref(288)
 const isMobile = navigator.userAgentData.mobile;
 if (isMobile == true)
     {
-      slice_no = 200;
+      records.value = 100;
     }
-
-
 
 var data_frontpage = {"pageName": "Front Page", "color": "rgb(52, 235, 88)", "data": [], "up": null}
 var data_productpage = {"pageName": "Product Page", "color": "rgb(52, 235, 88)", "data": [], "up": null}
@@ -25,21 +23,21 @@ var data_basket =  {"pageName": "Basket", "color": "rgb(52, 235, 88)", "labels":
 var parsedData = {"frontPage":{"time":[],"data":[]},"productPage":{"time":[],"data":[]},"wizard":{"time":[],"data":[]},"login":{"time":[],"data":[]},"basket":{"time":[],"data":[]}}
 var performanceData = null
 
-axios.get('https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?records=288')
+axios.get(`https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?records=${records.value}`)
   .then(response => {
     performanceData = response.data
     //console.log(performanceData)
     parsedData = parseData(performanceData)
-    data_frontpage["labels"] = parsedData["frontPage"]["time"].slice(slice_no.value)
-    data_frontpage["data"] = parsedData["frontPage"]["data"].slice(slice_no.value)
-    data_productpage["labels"] = parsedData["productPage"]["time"].slice(slice_no.value)
-    data_productpage["data"] = parsedData["productPage"]["data"].slice(slice_no.value)
-    data_wizard["labels"] = parsedData["wizard"]["time"].slice(slice_no.value)
-    data_wizard["data"] = parsedData["wizard"]["data"].slice(slice_no.value)
-    data_login["labels"] = parsedData["login"]["time"].slice(slice_no.value)
-    data_login["data"] = parsedData["login"]["data"].slice(slice_no.value)
-    data_basket["labels"] = parsedData["basket"]["time"].slice(slice_no.value)
-    data_basket["data"] = parsedData["basket"]["data"].slice(slice_no.value)
+    data_frontpage["labels"] = parsedData["frontPage"]["time"]
+    data_frontpage["data"] = parsedData["frontPage"]["data"]
+    data_productpage["labels"] = parsedData["productPage"]["time"]
+    data_productpage["data"] = parsedData["productPage"]["data"]
+    data_wizard["labels"] = parsedData["wizard"]["time"]
+    data_wizard["data"] = parsedData["wizard"]["data"]
+    data_login["labels"] = parsedData["login"]["time"]
+    data_login["data"] = parsedData["login"]["data"]
+    data_basket["labels"] = parsedData["basket"]["time"]
+    data_basket["data"] = parsedData["basket"]["data"]
 
     if (data_frontpage["data"][data_frontpage["data"].length - 1] == 60){
       data_frontpage["up"] = false
