@@ -13,7 +13,7 @@
   import { Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js'
 
   ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement)
-  
+
   const down = (ctx, value) => ctx.p0.parsed.y == 60 || ctx.p1.parsed.y == 60 ? value : undefined;
   const missing = (ctx, value) => ctx.p0.parsed.y == 0 || ctx.p1.parsed.y == 0 ? value : undefined;
 
