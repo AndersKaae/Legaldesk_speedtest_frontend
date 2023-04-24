@@ -73,7 +73,7 @@ const computedClass = computed(() => {
     @media screen and (max-width: 1200px) {
         .container {
             width: 100%;
-            height: 120px;
+            height: 100px;
             margin-bottom: 10px;
         }
     }
@@ -96,6 +96,12 @@ const computedClass = computed(() => {
 
     .number {
         font-size: 2rem;
+    }
+
+    @media screen and (max-width: 1200px) {
+        .number {
+            font-size: 1.2rem;
+        }
     }
     .percent {
         font-size: 1.2rem;
