@@ -69,6 +69,15 @@ const computedClass = computed(() => {
         /* drop shadow */
         -webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     }
+
+    @media screen and (max-width: 1200px) {
+        .container {
+            width: 100%;
+            height: 120px;
+            margin-bottom: 10px;
+        }
+    }
+
     .container-up{
         background-color: rgb(170, 255, 188);}
     .container-down {

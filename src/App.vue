@@ -103,7 +103,7 @@ function formatTime(time) {
     <UptimePercentage :PageSection = "'login'" :Up = "data_login['up']"></UptimePercentage>
     <UptimePercentage :PageSection = "'basket'" :Up = "data_basket['up']"></UptimePercentage>
   </div>
-  <div v-if="loaded">
+  <div class="graph-container" v-if="loaded">
     <Graph :PageData="data_frontpage"></Graph>
     <Graph :PageData="data_productpage"></Graph>
     <Graph :PageData="data_wizard"></Graph>
@@ -131,5 +131,20 @@ function formatTime(time) {
   flex-direction: row;
   padding-top: 2rem;
   padding-bottom: 4rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .uptime-container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.graph-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>
