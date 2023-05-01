@@ -18,8 +18,8 @@ var data_object = reactive({"DK":{"color":"rgb(52,235,88)","Frontpage":{"data":[
 
 var performanceData = null
 
-//const apiUrl = 'https://legaldeskspeedtest-production.up.railway.app/'
-const apiUrl = 'http://localhost:5000/'
+const apiUrl = 'https://legaldeskspeedtest-production.up.railway.app/'
+//const apiUrl = 'http://localhost:5000/'
 
 function upTrueFalse(page){
   var page_data = page["data"]
