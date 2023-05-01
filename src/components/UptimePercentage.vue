@@ -12,8 +12,8 @@ const uptimeData = ref(null)
 const name = ref("")
 const up = ref(props.Up)
 
-//const apiUrl = 'https://legaldeskspeedtest-production.up.railway.app/'
-const apiUrl = 'http://localhost:5000/'
+const apiUrl = 'https://legaldeskspeedtest-production.up.railway.app/'
+//const apiUrl = 'http://localhost:5000/'
 
 axios.get(`${apiUrl}api/v1/uptime?section=${PageSectionRef.value}`)
   .then(response => {
