@@ -67,6 +67,12 @@ getGraphData("DK", data_object)
 getGraphData("SE", data_object)
 getGraphData("NO", data_object)
 
+setInterval(() => {
+  getGraphData("DK", data_object);
+  getGraphData("SE", data_object);
+  getGraphData("NO", data_object);
+}, 150000);
+
 function parseData(apiData) {
   var parsedData = {"frontPage":{"time":[],"data":[]},"productPage":{"time":[],"data":[]},"wizard":{"time":[],"data":[]},"login":{"time":[],"data":[]},"basket":{"time":[],"data":[]}}
   // We are subtracting one from the length of the array because the last element might be incomplete because the test is running
