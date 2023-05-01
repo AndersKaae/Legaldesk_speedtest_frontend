@@ -11,7 +11,7 @@ var records = ref(288)
 const isMobile = navigator.userAgentData.mobile;
 if (isMobile == true)
     {
-      records.value = 100;
+      records.value = 50;
     }
 
 var data_frontpage = {"pageName": "Front Page", "color": "rgb(52, 235, 88)", "data": [], "up": null}
@@ -23,7 +23,7 @@ var data_basket =  {"pageName": "Basket", "color": "rgb(52, 235, 88)", "labels":
 var parsedData = {"frontPage":{"time":[],"data":[]},"productPage":{"time":[],"data":[]},"wizard":{"time":[],"data":[]},"login":{"time":[],"data":[]},"basket":{"time":[],"data":[]}}
 var performanceData = null
 
-axios.get(`https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?records=${records.value}`)
+axios.get(`https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?records=${records.value}&country=DK`)
   .then(response => {
     performanceData = response.data
     //console.log(performanceData)
