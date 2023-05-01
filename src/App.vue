@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import UpOrDown from './components/UpOrDown.vue'
 import Graph from './components/Graph.vue'
 import UptimePercentage from './components/UptimePercentage.vue'
@@ -14,63 +14,59 @@ if (isMobile == true)
       records.value = 50;
     }
 
-var data_frontpage = {"pageName": "Front Page", "color": "rgb(52, 235, 88)", "data": [], "up": null}
-var data_productpage = {"pageName": "Product Page", "color": "rgb(52, 235, 88)", "data": [], "up": null}
-var data_wizard = {"pageName": "Wizard",  "color": "rgb(52, 235, 88)", "data": [], "up": null}
-var data_login = {"pageName": "Login", "color": "rgb(52, 235, 88)", "labels": [], "data": [], "up": null}
-var data_basket =  {"pageName": "Basket", "color": "rgb(52, 235, 88)", "labels": [], "data": [], "up": null}
+var data_object = reactive({"DK":{"color":"rgb(52,235,88)","Frontpage":{"data":[],"up":null},"ProductPage":{"data":[],"up":null},"Wizard":{"data":[],"up":null},"Login":{"data":[],"up":null},"Basket":{"data":[],"up":null}},"SE":{"color":"rgb(224,66,245)","Frontpage":{"data":[],"up":null},"ProductPage":{"data":[],"up":null},"Wizard":{"data":[],"up":null},"Login":{"data":[],"up":null},"Basket":{"data":[],"up":null}},"NO":{"color":"rgb(66,245,239)","Frontpage":{"data":[],"up":null},"ProductPage":{"data":[],"up":null},"Wizard":{"data":[],"up":null},"Login":{"data":[],"up":null},"Basket":{"data":[],"up":null}}})
 
-var parsedData = {"frontPage":{"time":[],"data":[]},"productPage":{"time":[],"data":[]},"wizard":{"time":[],"data":[]},"login":{"time":[],"data":[]},"basket":{"time":[],"data":[]}}
 var performanceData = null
 
-axios.get(`https://legaldeskspeedtest-production.up.railway.app/api/v1/get-days?records=${records.value}&country=DK`)
-  .then(response => {
-    performanceData = response.data
-    //console.log(performanceData)
-    parsedData = parseData(performanceData)
-    data_frontpage["labels"] = parsedData["frontPage"]["time"]
-    data_frontpage["data"] = parsedData["frontPage"]["data"]
-    data_productpage["labels"] = parsedData["productPage"]["time"]
-    data_productpage["data"] = parsedData["productPage"]["data"]
-    data_wizard["labels"] = parsedData["wizard"]["time"]
-    data_wizard["data"] = parsedData["wizard"]["data"]
-    data_login["labels"] = parsedData["login"]["time"]
-    data_login["data"] = parsedData["login"]["data"]
-    data_basket["labels"] = parsedData["basket"]["time"]
-    data_basket["data"] = parsedData["basket"]["data"]
+//const apiUrl = 'https://legaldeskspeedtest-production.up.railway.app/'
+const apiUrl = 'http://localhost:5000/'
 
-    if (data_frontpage["data"][data_frontpage["data"].length - 1] == 60){
-      data_frontpage["up"] = false
-    } else {
-      data_frontpage["up"] = true
-    }
-    if (data_productpage["data"][data_productpage["data"].length - 1] == 60){
-      data_productpage["up"] = false
-    } else {
-      data_productpage["up"] = true
-    }
-    if (data_wizard["data"][data_wizard["data"].length - 1] == 60){
-      data_wizard["up"] = false
-    } else {
-      data_wizard["up"] = true
-    }
-    if (data_login["data"][data_login["data"].length - 1] == 60){
-      data_login["up"] = false
-    } else {
-      data_login["up"] = true
-    }
-    if (data_basket["data"][data_basket["data"].length - 1] == 60){
-      data_basket["up"] = false
-    } else {
-      data_basket["up"] = true
-    }
-    loaded.value = true
+function upTrueFalse(page){
+  var page_data = page["data"]
+  if (page_data[page_data.length - 1] == 60){
+        return false
+      } else {
+        return true
+      }
+}
+
+function getGraphData(country, data_object){
+  axios.get(`${apiUrl}api/v1/get-days?records=${records.value}&country=${country}`)
+    .then(response => {
+      performanceData = response.data
+      var apiData = parseData(performanceData)
+
+      // Setttings the labels:
+      data_object["labels"] = apiData["frontPage"]["time"]
+      // Frontpage
+      data_object[country]["Frontpage"]["data"] = apiData["frontPage"]["data"]
+      data_object[country]["Frontpage"]["up"] = upTrueFalse(data_object[country]["Frontpage"])
+      // ProductPage
+      data_object[country]["ProductPage"]["data"] = apiData["productPage"]["data"]
+      data_object[country]["ProductPage"]["up"] = upTrueFalse(data_object[country]["ProductPage"])
+      // Wizard
+      data_object[country]["Wizard"]["data"] = apiData["wizard"]["data"]
+      data_object[country]["Wizard"]["up"] = upTrueFalse(data_object[country]["Wizard"])
+      // Login
+      data_object[country]["Login"]["data"] = apiData["login"]["data"]
+      data_object[country]["Login"]["up"] = upTrueFalse(data_object[country]["Login"])
+      // Basket
+      data_object[country]["Basket"]["data"] = apiData["basket"]["data"]
+      data_object[country]["Basket"]["up"] = upTrueFalse(data_object[country]["Basket"])
+      loaded.value = true
+    })
+    .catch(error => {
+      console.error(error)
   })
-  .catch(error => {
-    console.error(error)
-})
+  console.log(data_object)
+}
+
+getGraphData("DK", data_object)
+getGraphData("SE", data_object)
+getGraphData("NO", data_object)
 
 function parseData(apiData) {
+  var parsedData = {"frontPage":{"time":[],"data":[]},"productPage":{"time":[],"data":[]},"wizard":{"time":[],"data":[]},"login":{"time":[],"data":[]},"basket":{"time":[],"data":[]}}
   // We are subtracting one from the length of the array because the last element might be incomplete because the test is running
   for(var i = 0; i < apiData['result'].length; i++) {
     var formattedTime = formatTime(apiData['result'][i]["datetime"])
@@ -104,21 +100,18 @@ function formatTime(time) {
 <template>
   <UpOrDown></UpOrDown>
   <div class="uptime-container">
-    <UptimePercentage :PageSection = "'front_page'" :Up = "data_frontpage['up']"></UptimePercentage>
-    <UptimePercentage :PageSection = "'product_page'" :Up = "data_productpage['up']"></UptimePercentage>
-    <UptimePercentage :PageSection = "'wizard'" :Up = "data_wizard['up']"></UptimePercentage>
-    <UptimePercentage :PageSection = "'login'" :Up = "data_login['up']"></UptimePercentage>
-    <UptimePercentage :PageSection = "'basket'" :Up = "data_basket['up']"></UptimePercentage>
+    <UptimePercentage :PageSection = "'front_page'" :Up = "data_object['DK']['Frontpage']['up']"></UptimePercentage>
+    <UptimePercentage :PageSection = "'product_page'" :Up = "data_object['DK']['ProductPage']['up']"></UptimePercentage>
+    <UptimePercentage :PageSection = "'wizard'" :Up = "data_object['DK']['Wizard']['up']"></UptimePercentage>
+    <UptimePercentage :PageSection = "'login'" :Up = "data_object['DK']['Login']['up']"></UptimePercentage>
+    <UptimePercentage :PageSection = "'basket'" :Up = "data_object['DK']['Basket']['up']"></UptimePercentage>
   </div>
-  <div class="graph-container" v-if="loaded">
-    <Graph :PageData="data_frontpage"></Graph>
-    <Graph :PageData="data_productpage"></Graph>
-    <Graph :PageData="data_wizard"></Graph>
-    <Graph :PageData="data_login"></Graph>
-    <Graph :PageData="data_basket"></Graph>
-  </div>
-  <div id="loader" v-else>
-    <img src="./assets/loader.gif" alt="Loading..."/>
+  <div class="graph-container">
+    <Graph :PageSection = "'Frontpage'" :PageData="data_object"></Graph>
+    <Graph :PageSection = "'ProductPage'" :PageData="data_object"></Graph>
+    <Graph :PageSection = "'Wizard'" :PageData="data_object"></Graph>
+    <Graph :PageSection = "'Login'" :PageData="data_object"></Graph>
+    <Graph :PageSection = "'Basket'" :PageData="data_object"></Graph>
   </div>
 </template>
 
