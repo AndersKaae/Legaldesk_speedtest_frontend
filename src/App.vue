@@ -8,15 +8,13 @@ import axios from 'axios'
 const loaded = ref(false);
 
 var records = ref(288)
+
 const isMobile = navigator.userAgentData.mobile;
-if (isMobile == true)
-    {
+if (isMobile == true){
       records.value = 50;
-    }
+}
 
 var data_object = reactive({"DK":{"color":"rgb(75,192,192)","Frontpage":{"data":[],"up":null},"ProductPage":{"data":[],"up":null},"Wizard":{"data":[],"up":null},"Login":{"data":[],"up":null},"Basket":{"data":[],"up":null}},"SE":{"color":"rgb(255,99,132)","Frontpage":{"data":[],"up":null},"ProductPage":{"data":[],"up":null},"Wizard":{"data":[],"up":null},"Login":{"data":[],"up":null},"Basket":{"data":[],"up":null}},"NO":{"color":"rgb(255,159,64)","Frontpage":{"data":[],"up":null},"ProductPage":{"data":[],"up":null},"Wizard":{"data":[],"up":null},"Login":{"data":[],"up":null},"Basket":{"data":[],"up":null}}})
-
-
 
 var performanceData = null
 
